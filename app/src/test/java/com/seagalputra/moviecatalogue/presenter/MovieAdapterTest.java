@@ -1,5 +1,6 @@
 package com.seagalputra.moviecatalogue.presenter;
 
+import com.seagalputra.moviecatalogue.adapter.MovieAdapter;
 import com.seagalputra.moviecatalogue.model.Movie;
 import com.seagalputra.moviecatalogue.view.MovieView;
 
@@ -13,16 +14,15 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MoviePresenterTest {
+public class MovieAdapterTest {
 
     @Mock
-    private MoviePresenter moviePresenter;
+    private MovieAdapter movieAdapter;
     private MovieView movieView;
 
     @Before
     public void setup() {
         movieView = mock(MovieView.class);
-        moviePresenter = new MoviePresenter(movieView);
     }
 
     @Test
