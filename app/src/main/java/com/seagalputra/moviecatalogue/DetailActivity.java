@@ -7,8 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seagalputra.moviecatalogue.model.Movie;
+import com.seagalputra.moviecatalogue.presenter.DetailPresenter;
+import com.seagalputra.moviecatalogue.view.MovieView;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements MovieView {
     public static final String EXTRA_MOVIE = "extra_movie";
     private Movie movie;
 
@@ -28,6 +30,12 @@ public class DetailActivity extends AppCompatActivity {
         imgDetail = findViewById(R.id.img_detail);
         movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
+        final DetailPresenter presenter = new DetailPresenter(this);
+        presenter.showDetailMovie(movie);
+    }
+
+    @Override
+    public void viewDetailMovie(Movie movie) {
         tvTitle.setText(movie.getTitle());
         tvDate.setText(movie.getDate());
         tvDescription.setText(movie.getDescription());
