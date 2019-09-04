@@ -2,6 +2,7 @@ package com.seagalputra.moviecatalogue;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this, movies.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MainActivity.this, movies.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+                Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+                detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movies.get(i));
+                startActivity(detailIntent);
             }
         });
     }
