@@ -2,6 +2,6 @@ package com.seagalputra.moviecatalogue.view;
 
 import com.seagalputra.moviecatalogue.model.Movie;
 
-public interface MovieView {
+public interface DetailView {
     void viewDetailMovie(Movie movie);
 }

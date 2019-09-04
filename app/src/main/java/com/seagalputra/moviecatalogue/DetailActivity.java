@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.seagalputra.moviecatalogue.model.Movie;
 import com.seagalputra.moviecatalogue.presenter.DetailPresenter;
-import com.seagalputra.moviecatalogue.view.MovieView;
+import com.seagalputra.moviecatalogue.view.DetailView;
 
-public class DetailActivity extends AppCompatActivity implements MovieView {
+public class DetailActivity extends AppCompatActivity implements DetailView {
     public static final String EXTRA_MOVIE = "extra_movie";
     private Movie movie;
 

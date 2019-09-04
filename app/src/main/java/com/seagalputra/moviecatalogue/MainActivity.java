@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.seagalputra.moviecatalogue.adapter.MovieAdapter;
 import com.seagalputra.moviecatalogue.model.Movie;
+import com.seagalputra.moviecatalogue.presenter.MainPresenter;
+import com.seagalputra.moviecatalogue.view.MainView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainView {
     private ListView listView;
     private MovieAdapter movieAdapter;
 
@@ -31,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.lv_movie);
-        movieAdapter = new MovieAdapter(this);
-        listView.setAdapter(movieAdapter);
         prepareData();
-        addMovieData();
+
+        final MainPresenter presenter = new MainPresenter(this);
+        movies = presenter.addMovieData(moviesTitle, moviesDate, moviesDescription, moviesPhoto);
+        presenter.showListData(movies);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // Toast.makeText(MainActivity.this, movies.get(i).getTitle(), Toast.LENGTH_SHORT).show();
                 Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
                 detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movies.get(i));
                 startActivity(detailIntent);
@@ -53,17 +54,10 @@ public class MainActivity extends AppCompatActivity {
         moviesPhoto = getResources().obtainTypedArray(R.array.data_photo);
     }
 
-    public void addMovieData() {
-        movies = new ArrayList<>();
-
-        for (int i = 0; i < moviesTitle.length; i++) {
-            Movie movie = new Movie();
-            movie.setPhoto(moviesPhoto.getResourceId(i, -1));
-            movie.setTitle(moviesTitle[i]);
-            movie.setDate(moviesDate[i]);
-            movie.setDescription(moviesDescription[i]);
-            movies.add(movie);
-        }
+    @Override
+    public void showListMovie(ArrayList<Movie> movies) {
+        movieAdapter = new MovieAdapter(this);
+        listView.setAdapter(movieAdapter);
         movieAdapter.setMovies(movies);
     }
 }

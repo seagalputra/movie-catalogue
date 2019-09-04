@@ -2,7 +2,7 @@ package com.seagalputra.moviecatalogue.presenter;
 
 import com.seagalputra.moviecatalogue.adapter.MovieAdapter;
 import com.seagalputra.moviecatalogue.model.Movie;
-import com.seagalputra.moviecatalogue.view.MovieView;
+import com.seagalputra.moviecatalogue.view.DetailView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,16 +18,11 @@ public class MovieAdapterTest {
 
     @Mock
     private MovieAdapter movieAdapter;
-    private MovieView movieView;
+    private DetailView detailView;
 
     @Before
     public void setup() {
-        movieView = mock(MovieView.class);
+        detailView = mock(DetailView.class);
     }
 
-    @Test
-    public void getMovieData() {
-        Movie movie = new Movie("Aquaman");
-        assertEquals("Aquaman", movie.getTitle());
-    }
 }

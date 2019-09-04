@@ -1,16 +1,16 @@
 package com.seagalputra.moviecatalogue.presenter;
 
 import com.seagalputra.moviecatalogue.model.Movie;
-import com.seagalputra.moviecatalogue.view.MovieView;
+import com.seagalputra.moviecatalogue.view.DetailView;
 
 public class DetailPresenter {
-    private MovieView movieView;
+    private DetailView detailView;
 
-    public DetailPresenter(MovieView movieView) {
-        this.movieView = movieView;
+    public DetailPresenter(DetailView detailView) {
+        this.detailView = detailView;
     }
 
     public void showDetailMovie(Movie movie) {
-        movieView.viewDetailMovie(movie);
+        detailView.viewDetailMovie(movie);
     }
 }
