@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void prepareData() {
-        moviesTitle = getResources().getStringArray(R.array.data_title);
-        moviesDate = getResources().getStringArray(R.array.data_date);
-        moviesDescription = getResources().getStringArray(R.array.data_description);
-        moviesPhoto = getResources().obtainTypedArray(R.array.data_photo);
+        moviesTitle = getResources().getStringArray(R.array.movies_title);
+        moviesDate = getResources().getStringArray(R.array.movies_date);
+        moviesDescription = getResources().getStringArray(R.array.movies_description);
+        moviesPhoto = getResources().obtainTypedArray(R.array.movies_photo);
     }
 
     @Override

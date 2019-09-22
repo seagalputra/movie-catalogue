@@ -4,7 +4,7 @@
     <string name="lorem">lorem ipsum dolor sit amet</string>
     <string name="date">January 1, 1999</string>
 
-    <string-array name="data_title">
+    <string-array name="movies_title">
         <item>"Aquaman"</item>
         <item>"A Star is Born"</item>
         <item>"Avengers: Infinity War"</item>
@@ -27,7 +27,7 @@
         <item>"Venom"</item>
     </string-array>
 
-    <string-array name="data_date">
+    <string-array name="movies_date">
         <item>December 7, 2018</item>
         <item>October 3, 2018</item>
         <item>April 25, 2018</item>
@@ -50,7 +50,7 @@
         <item>September 28, 2018</item>
     </string-array>
 
-    <string-array name="data_description">
+    <string-array name="movies_description">
         <item>"Once home to the most advanced civilization on Earth, Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people and then the surface world. Standing in his way is Arthur Curry, Orm's half-human, half-Atlantean brother and true heir to the throne."</item>
         <item>"Seasoned musician Jackson Maine discovers and falls in love with struggling artist Ally. She has just about given up on her dream to make it big as a singer until Jack coaxes her into the spotlight. But even as Ally's career takes off, the personal side of their relationship is breaking down, as Jack fights an ongoing battle with his own internal demons."</item>
         <item>"As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle, a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy, his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality. Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain."</item>
@@ -73,7 +73,7 @@
         <item>"Investigative journalist Eddie Brock attempts a comeback following a scandal, but accidentally becomes the host of Venom, a violent, super powerful alien symbiote. Soon, he must rely on his newfound powers to protect the world from a shadowy organization looking for a symbiote of their own."</item>
     </string-array>
 
-    <array name="data_photo">
+    <array name="movies_photo">
         <item>@drawable/poster_aquaman</item>
         <item>@drawable/poster_a_star</item>
         <item>@drawable/poster_avengerinfinity</item>
