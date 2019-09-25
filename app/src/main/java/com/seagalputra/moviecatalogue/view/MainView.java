@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface MainView {
     void showListMovie(ArrayList<Movie> movies);
+    void navigateToDetail(Movie movie);
 }

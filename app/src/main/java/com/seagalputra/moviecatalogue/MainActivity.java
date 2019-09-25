@@ -1,18 +1,16 @@
 package com.seagalputra.moviecatalogue;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import com.seagalputra.moviecatalogue.adapter.ListMovieAdapter;
-import com.seagalputra.moviecatalogue.adapter.MovieAdapter;
 import com.seagalputra.moviecatalogue.model.Movie;
 import com.seagalputra.moviecatalogue.presenter.MainPresenter;
 import com.seagalputra.moviecatalogue.view.MainView;
@@ -54,5 +52,20 @@ public class MainActivity extends AppCompatActivity implements MainView {
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
         ListMovieAdapter listMovieAdapter = new ListMovieAdapter(movies);
         rvMovies.setAdapter(listMovieAdapter);
+        rvMovies.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        listMovieAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(Movie movie) {
+                navigateToDetail(movie);
+            }
+        });
+    }
+
+    @Override
+    public void navigateToDetail(Movie movie) {
+        Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+        detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
+        startActivity(detailIntent);
     }
 }

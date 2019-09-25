@@ -17,9 +17,14 @@ import java.util.ArrayList;
 
 public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.ListViewHolder> {
     private ArrayList<Movie> listMovie;
+    private OnItemClickCallback onItemClickCallback;
 
     public ListMovieAdapter(ArrayList<Movie> listMovie) {
         this.listMovie = listMovie;
+    }
+
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @NonNull
@@ -30,7 +35,7 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ListViewHolder holder, final int position) {
         Movie movie = listMovie.get(position);
 
         Glide.with(holder.itemView.getContext())
@@ -40,6 +45,13 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         holder.tvTitle.setText(movie.getTitle());
         holder.tvDescription.setText(movie.getDescription());
         holder.tvDate.setText(movie.getDate());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickCallback.onItemClicked(listMovie.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -60,5 +72,9 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
             tvDescription = itemView.findViewById(R.id.tv_description);
             imgPhoto = itemView.findViewById(R.id.img_photo);
         }
+    }
+
+    public interface OnItemClickCallback {
+        void onItemClicked(Movie movie);
     }
 }
