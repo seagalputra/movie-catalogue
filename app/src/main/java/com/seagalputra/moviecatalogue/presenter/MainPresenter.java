@@ -3,7 +3,6 @@ package com.seagalputra.moviecatalogue.presenter;
 import android.content.res.TypedArray;
 
 import com.seagalputra.moviecatalogue.model.Movie;
-import com.seagalputra.moviecatalogue.view.DetailView;
 import com.seagalputra.moviecatalogue.view.MainView;
 
 import java.util.ArrayList;
@@ -31,6 +30,6 @@ public class MainPresenter {
     }
 
     public void showListData(ArrayList<Movie> movies) {
-        mainView.showListMovie(movies);
+        mainView.showList(movies);
     }
 }

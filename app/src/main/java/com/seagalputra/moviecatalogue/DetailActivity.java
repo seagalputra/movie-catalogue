@@ -32,6 +32,10 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
         final DetailPresenter presenter = new DetailPresenter(this);
         presenter.showDetailMovie(movie);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(movie.getTitle());
+        }
     }
 
     @Override

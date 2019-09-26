@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">MovieCatalogue</string>
+    <string name="app_name">Movie Catalogue</string>
     <string name="title_movies">Movies Title</string>
     <string name="lorem">lorem ipsum dolor sit amet</string>
     <string name="date">January 1, 1999</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
 
     <!--  Movies local data  -->
     <string-array name="movies_title">
@@ -185,4 +187,6 @@
         <item>@drawable/poster_the_umbrella</item>
         <item>@drawable/poster_the_walking_dead</item>
     </array>
+
+    <string name="movies_photo">Movies Photo</string>
 </resources>

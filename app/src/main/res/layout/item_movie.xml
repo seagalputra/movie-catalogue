@@ -8,7 +8,8 @@
         android:id="@+id/img_photo"
         android:layout_width="100dp"
         android:layout_height="150dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:contentDescription="@string/movies_photo"/>
 
     <TextView
         android:id="@+id/tv_title"
@@ -38,7 +39,7 @@
         android:layout_below="@id/tv_date"
         android:layout_marginStart="26dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/img_photo"
+        android:layout_toEndOf="@id/img_photo"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="@string/lorem" />
