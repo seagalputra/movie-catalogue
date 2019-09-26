@@ -3,11 +3,18 @@ package com.seagalputra.moviecatalogue.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Movie implements Parcelable {
-    private int photo;
-    private String title;
-    private String date;
-    private String description;
+public final class Movie implements Parcelable {
+    private final int photo;
+    private final String title;
+    private final String date;
+    private final String description;
+
+    public Movie(MovieBuilder movieBuilder) {
+        this.photo = movieBuilder.photo;
+        this.title = movieBuilder.title;
+        this.date = movieBuilder.date;
+        this.description = movieBuilder.description;
+    }
 
     public String getTitle() {
         return title;
@@ -25,20 +32,38 @@ public class Movie implements Parcelable {
         return date;
     }
 
-    public void setPhoto(int photo) {
-        this.photo = photo;
-    }
+    public static class MovieBuilder {
+        private int photo;
+        private final String title;
+        private String date;
+        private String description;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public MovieBuilder(String title) {
+            if (title == null) {
+                throw new IllegalArgumentException("title can not be null");
+            }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+            this.title = title;
+        }
 
-    public void setDate(String date) {
-        this.date = date;
+        public MovieBuilder withPhoto(int photo) {
+            this.photo = photo;
+            return this;
+        }
+
+        public MovieBuilder withDate(String date) {
+            this.date = date;
+            return this;
+        }
+
+        public MovieBuilder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Movie build() {
+            return new Movie(this);
+        }
     }
 
     @Override
@@ -52,9 +77,6 @@ public class Movie implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.date);
         dest.writeString(this.description);
-    }
-
-    public Movie() {
     }
 
     protected Movie(Parcel in) {

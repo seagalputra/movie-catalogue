@@ -18,11 +18,11 @@ public class MainPresenter {
         ArrayList<Movie> movies = new ArrayList<>();
 
         for (int i = 0; i < moviesTitle.length; i++) {
-            Movie movie = new Movie();
-            movie.setPhoto(moviesPhoto.getResourceId(i, -1));
-            movie.setTitle(moviesTitle[i]);
-            movie.setDate(moviesDate[i]);
-            movie.setDescription(moviesDescription[i]);
+            Movie movie = new Movie.MovieBuilder(moviesTitle[i])
+                    .withDate(moviesDate[i])
+                    .withDescription(moviesDescription[i])
+                    .withPhoto(moviesPhoto.getResourceId(i, -1))
+                    .build();
             movies.add(movie);
         }
 
