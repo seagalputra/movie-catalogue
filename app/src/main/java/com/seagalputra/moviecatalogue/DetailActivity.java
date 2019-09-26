@@ -35,6 +35,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(movie.getTitle());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
