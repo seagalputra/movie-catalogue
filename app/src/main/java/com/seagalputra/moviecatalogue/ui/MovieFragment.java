@@ -67,8 +67,8 @@ public class MovieFragment extends Fragment implements MainView, Data {
 
 
     @Override
-    public <T> void showList(ArrayList<T> list) {
-        ListMovieAdapter listMovieAdapter = new ListMovieAdapter((ArrayList<Movie>) list);
+    public void showList(ArrayList<Movie> list) {
+        ListMovieAdapter listMovieAdapter = new ListMovieAdapter(list);
         rvMovies.setAdapter(listMovieAdapter);
 
         listMovieAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {

@@ -5,6 +5,6 @@ import com.seagalputra.moviecatalogue.model.Movie;
 import java.util.ArrayList;
 
 public interface MainView {
-    <T> void showList(ArrayList<T> list);
+    void showList(ArrayList<Movie> list);
     void navigateToDetail(Movie movie);
 }

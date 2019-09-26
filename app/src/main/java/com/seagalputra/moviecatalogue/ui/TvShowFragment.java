@@ -75,8 +75,8 @@ public class TvShowFragment extends Fragment implements MainView, Data {
     }
 
     @Override
-    public <T> void showList(ArrayList<T> list) {
-        ListMovieAdapter listTvShowAdapter = new ListMovieAdapter((ArrayList<Movie>) list);
+    public void showList(ArrayList<Movie> list) {
+        ListMovieAdapter listTvShowAdapter = new ListMovieAdapter(list);
         rvTvShows.setAdapter(listTvShowAdapter);
 
         listTvShowAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {
