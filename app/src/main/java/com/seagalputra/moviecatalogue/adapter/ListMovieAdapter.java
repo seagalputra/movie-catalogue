@@ -23,8 +23,18 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         this.listMovie = listMovie;
     }
 
+    public ListMovieAdapter() {
+        listMovie = new ArrayList<>();
+    }
+
     public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback;
+    }
+
+    public void setMovieData(ArrayList<Movie> items) {
+        listMovie.clear();
+        listMovie.addAll(items);
+        notifyDataSetChanged();
     }
 
     @NonNull

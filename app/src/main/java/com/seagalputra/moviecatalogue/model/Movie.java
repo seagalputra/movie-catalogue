@@ -4,12 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public final class Movie implements Parcelable {
-    private final int photo;
+    private final int id;
+    private final String photo;
     private final String title;
     private final String date;
     private final String description;
 
     public Movie(MovieBuilder movieBuilder) {
+        this.id = movieBuilder.id;
         this.photo = movieBuilder.photo;
         this.title = movieBuilder.title;
         this.date = movieBuilder.date;
@@ -20,7 +22,7 @@ public final class Movie implements Parcelable {
         return title;
     }
 
-    public int getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
@@ -32,21 +34,27 @@ public final class Movie implements Parcelable {
         return date;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public static class MovieBuilder {
-        private int photo;
+        private final int id;
+        private String photo;
         private final String title;
         private String date;
         private String description;
 
-        public MovieBuilder(String title) {
+        public MovieBuilder(int id, String title) {
             if (title == null) {
                 throw new IllegalArgumentException("title can not be null");
             }
 
+            this.id = id;
             this.title = title;
         }
 
-        public MovieBuilder withPhoto(int photo) {
+        public MovieBuilder withPhoto(String photo) {
             this.photo = photo;
             return this;
         }
@@ -73,14 +81,16 @@ public final class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.photo);
+        dest.writeInt(this.id);
+        dest.writeString(this.photo);
         dest.writeString(this.title);
         dest.writeString(this.date);
         dest.writeString(this.description);
     }
 
     protected Movie(Parcel in) {
-        this.photo = in.readInt();
+        this.id = in.readInt();
+        this.photo = in.readString();
         this.title = in.readString();
         this.date = in.readString();
         this.description = in.readString();

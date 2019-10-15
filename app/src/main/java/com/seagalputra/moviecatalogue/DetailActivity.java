@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.seagalputra.moviecatalogue.model.Movie;
 import com.seagalputra.moviecatalogue.presenter.DetailPresenter;
 import com.seagalputra.moviecatalogue.view.DetailView;
@@ -44,6 +46,9 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         tvTitle.setText(movie.getTitle());
         tvDate.setText(movie.getDate());
         tvDescription.setText(movie.getDescription());
-        imgDetail.setImageResource(movie.getPhoto());
+        Glide.with(this)
+                .load(movie.getPhoto())
+                .apply(new RequestOptions().override(500))
+                .into(imgDetail);
     }
 }
