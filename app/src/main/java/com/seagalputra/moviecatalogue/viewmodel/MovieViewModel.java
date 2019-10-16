@@ -23,11 +23,10 @@ import cz.msebera.android.httpclient.Header;
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
 
-    public void setMovie() {
-        final ArrayList<Movie> listItems = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + BuildConfig.ApiKey + "&language=en-US";
+    public void setMovie(String language) {
+        String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + BuildConfig.ApiKey + "&language=" + language;
         final String posterUrl = "https://image.tmdb.org/t/p/w500";
-
+        final ArrayList<Movie> listItems = new ArrayList<>();
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override

@@ -23,9 +23,9 @@ public class TvShowViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<Movie>> listTvShow = new MutableLiveData<>();
 
-    public void setTvShow() {
+    public void setTvShow(String language) {
         final ArrayList<Movie> listItems = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/discover/tv?api_key="+ BuildConfig.ApiKey +"&language=en-US";
+        String url = "https://api.themoviedb.org/3/discover/tv?api_key="+ BuildConfig.ApiKey +"&language=" + language;
         final String posterUrl = "https://image.tmdb.org/t/p/w500";
 
         AsyncHttpClient client = new AsyncHttpClient();

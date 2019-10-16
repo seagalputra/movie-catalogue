@@ -9,10 +9,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.seagalputra.moviecatalogue.model.Movie;
-import com.seagalputra.moviecatalogue.presenter.DetailPresenter;
-import com.seagalputra.moviecatalogue.view.DetailView;
 
-public class DetailActivity extends AppCompatActivity implements DetailView {
+public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     private Movie movie;
 
@@ -32,8 +30,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         imgDetail = findViewById(R.id.img_detail);
         movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
-        final DetailPresenter presenter = new DetailPresenter(this);
-        presenter.showDetailMovie(movie);
+        viewDetailMovie(movie);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(movie.getTitle());
@@ -41,7 +38,6 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         }
     }
 
-    @Override
     public void viewDetailMovie(Movie movie) {
         tvTitle.setText(movie.getTitle());
         tvDate.setText(movie.getDate());

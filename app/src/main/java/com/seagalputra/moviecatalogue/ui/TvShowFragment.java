@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.seagalputra.moviecatalogue.model.Movie;
 import com.seagalputra.moviecatalogue.viewmodel.TvShowViewModel;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class TvShowFragment extends Fragment {
 
@@ -33,6 +35,7 @@ public class TvShowFragment extends Fragment {
     private ListMovieAdapter listTvShowAdapter;
 
     private TvShowViewModel tvShowViewModel;
+    private String language;
 
     public TvShowFragment() {}
 
@@ -49,8 +52,13 @@ public class TvShowFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressbar_tv_show);
 
+        language = Locale.getDefault().getLanguage();
         tvShowViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(TvShowViewModel.class);
-        tvShowViewModel.setTvShow();
+        if (language.equals("in")) {
+            tvShowViewModel.setTvShow("id");
+        } else {
+            tvShowViewModel.setTvShow(language);
+        }
         showLoading(true);
 
         rvTvShows = view.findViewById(R.id.rv_tv_shows);

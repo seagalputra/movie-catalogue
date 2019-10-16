@@ -2,10 +2,12 @@ package com.seagalputra.moviecatalogue.ui;
 
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ import com.seagalputra.moviecatalogue.model.Movie;
 import com.seagalputra.moviecatalogue.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MovieFragment extends Fragment {
 
@@ -33,6 +37,7 @@ public class MovieFragment extends Fragment {
     private ListMovieAdapter listMovieAdapter;
 
     private MovieViewModel movieViewModel;
+    private String language;
 
     public MovieFragment() {}
 
@@ -49,8 +54,14 @@ public class MovieFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressbar_movie);
 
+        language = Locale.getDefault().getLanguage();
         movieViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MovieViewModel.class);
-        movieViewModel.setMovie();
+        if (language.equals("in")) {
+            movieViewModel.setMovie("id");
+        } else {
+            movieViewModel.setMovie(language);
+        }
+
         showLoading(true);
 
         rvMovies = view.findViewById(R.id.rv_movies);
