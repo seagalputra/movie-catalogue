@@ -25,7 +25,7 @@ public class TvShowViewModel extends ViewModel {
 
     public void setTvShow(String language) {
         final ArrayList<Movie> listItems = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/discover/tv?api_key="+ BuildConfig.ApiKey +"&language=" + language;
+        String url = BuildConfig.TvShowURL + language;
         final String posterUrl = "https://image.tmdb.org/t/p/w500";
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -60,12 +60,11 @@ public class TvShowViewModel extends ViewModel {
 
     private Movie getTvShow(JSONObject item, String posterUrl) throws JSONException {
         String posterPath = posterUrl + item.getString("poster_path");
-        Movie tvShow = new Movie.MovieBuilder(item.getInt("id"), item.getString("original_name"))
+        return new Movie.MovieBuilder(item.getInt("id"), item.getString("original_name"))
                 .withDate(item.getString("first_air_date"))
                 .withDescription(item.getString("overview"))
                 .withPhoto(posterPath)
                 .build();
-        return tvShow;
     }
 
     public LiveData<ArrayList<Movie>> getTvShows() {

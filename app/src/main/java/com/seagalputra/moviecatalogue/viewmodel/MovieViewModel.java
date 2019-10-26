@@ -1,5 +1,6 @@
 package com.seagalputra.moviecatalogue.viewmodel;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -24,7 +25,7 @@ public class MovieViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
 
     public void setMovie(String language) {
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + BuildConfig.ApiKey + "&language=" + language;
+        String url = BuildConfig.MovieURL + language;
         final String posterUrl = "https://image.tmdb.org/t/p/w500";
         final ArrayList<Movie> listItems = new ArrayList<>();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -45,18 +46,17 @@ public class MovieViewModel extends ViewModel {
         });
     }
 
-    public Movie getMovie(JSONObject movieItem, String url) throws JSONException {
+    private Movie getMovie(JSONObject movieItem, String url) throws JSONException {
         String posterPath = url + movieItem.getString("poster_path");
-        Movie movie = new Movie.MovieBuilder(movieItem.getInt("id"), movieItem.getString("original_title"))
+
+        return new Movie.MovieBuilder(movieItem.getInt("id"), movieItem.getString("original_title"))
                 .withDate(movieItem.getString("release_date"))
                 .withDescription(movieItem.getString("overview"))
                 .withPhoto(posterPath)
                 .build();
-
-        return movie;
     }
 
-    public void parseMovie(ArrayList<Movie> listItems, String posterUrl, byte[] responseBody) throws JSONException {
+    private void parseMovie(ArrayList<Movie> listItems, String posterUrl, byte[] responseBody) throws JSONException {
         String result = new String(responseBody);
         JSONObject responseObject = new JSONObject(result);
         JSONArray listResults = responseObject.getJSONArray("results");

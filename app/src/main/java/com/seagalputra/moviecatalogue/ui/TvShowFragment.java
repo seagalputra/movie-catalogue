@@ -74,7 +74,7 @@ public class TvShowFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        tvShowViewModel.getTvShows().observe(this, new Observer<ArrayList<Movie>>() {
+        tvShowViewModel.getTvShows().observe(getViewLifecycleOwner(), new Observer<ArrayList<Movie>>() {
             @Override
             public void onChanged(ArrayList<Movie> movies) {
                 if (movies != null) {
@@ -92,7 +92,7 @@ public class TvShowFragment extends Fragment {
         });
     }
 
-    public void navigateToDetail(Movie movie) {
+    private void navigateToDetail(Movie movie) {
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
         detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
         startActivity(detailIntent);

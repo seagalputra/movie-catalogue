@@ -32,12 +32,9 @@ import java.util.Locale;
 
 public class MovieFragment extends Fragment {
 
-    private RecyclerView rvMovies;
     private ProgressBar progressBar;
     private ListMovieAdapter listMovieAdapter;
-
     private MovieViewModel movieViewModel;
-    private String language;
 
     public MovieFragment() {}
 
@@ -54,7 +51,7 @@ public class MovieFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progressbar_movie);
 
-        language = Locale.getDefault().getLanguage();
+        String language = Locale.getDefault().getLanguage();
         movieViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MovieViewModel.class);
         if (language.equals("in")) {
             movieViewModel.setMovie("id");
@@ -64,7 +61,7 @@ public class MovieFragment extends Fragment {
 
         showLoading(true);
 
-        rvMovies = view.findViewById(R.id.rv_movies);
+        RecyclerView rvMovies = view.findViewById(R.id.rv_movies);
         rvMovies.setHasFixedSize(true);
         rvMovies.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rvMovies.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
@@ -77,7 +74,7 @@ public class MovieFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        movieViewModel.getMovies().observe(this, new Observer<ArrayList<Movie>>() {
+        movieViewModel.getMovies().observe(getViewLifecycleOwner(), new Observer<ArrayList<Movie>>() {
             @Override
             public void onChanged(ArrayList<Movie> movies) {
                 if (movies != null) {
@@ -95,7 +92,7 @@ public class MovieFragment extends Fragment {
         });
     }
 
-    public void navigateToDetail(Movie movie) {
+    private void navigateToDetail(Movie movie) {
         Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
         detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
         startActivity(detailIntent);
