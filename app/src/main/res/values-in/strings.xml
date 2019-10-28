@@ -8,4 +8,5 @@
     <string name="tv_shows">Acara TV</string>
     <string name="movies_photo">Poster Film</string>
     <string name="change_language">Ubah Bahasa</string>
+    <string name="favorite">Favorit</string>
 </resources>

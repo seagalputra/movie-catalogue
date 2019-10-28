@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.seagalputra.moviecatalogue.BuildConfig;
-import com.seagalputra.moviecatalogue.model.Movie;
+import com.seagalputra.moviecatalogue.entity.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class TvShowViewModel extends ViewModel {
-
     private MutableLiveData<ArrayList<Movie>> listTvShow = new MutableLiveData<>();
+    public static final int TVSHOW_TYPE = 2;
 
     public void setTvShow(String language) {
         final ArrayList<Movie> listItems = new ArrayList<>();
@@ -64,6 +64,7 @@ public class TvShowViewModel extends ViewModel {
                 .withDate(item.getString("first_air_date"))
                 .withDescription(item.getString("overview"))
                 .withPhoto(posterPath)
+                .withType(TVSHOW_TYPE)
                 .build();
     }
 

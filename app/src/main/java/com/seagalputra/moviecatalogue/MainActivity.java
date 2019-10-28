@@ -2,6 +2,7 @@ package com.seagalputra.moviecatalogue;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -11,12 +12,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.seagalputra.moviecatalogue.repository.Repository;
+import com.seagalputra.moviecatalogue.repository.RepositoryImpl;
+import com.seagalputra.moviecatalogue.ui.FavoriteFragment;
 import com.seagalputra.moviecatalogue.ui.MovieFragment;
 import com.seagalputra.moviecatalogue.ui.TvShowFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     Fragment fragment;
+    private Repository repository;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -32,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.navigation_tv_shows:
                     fragment = new TvShowFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                            .commit();
+                    return true;
+                case R.id.navigation_favorite:
+                    fragment = new FavoriteFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
                             .commit();
@@ -62,11 +73,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        repository = RepositoryImpl.getInstance(getApplicationContext());
+        repository.open();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if (savedInstanceState == null) {
             navigation.setSelectedItemId(R.id.navigation_movies);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        repository.close();
     }
 }

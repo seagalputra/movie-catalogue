@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.seagalputra.moviecatalogue.R;
-import com.seagalputra.moviecatalogue.model.Movie;
+import com.seagalputra.moviecatalogue.entity.Movie;
 
 import java.util.ArrayList;
 
@@ -28,9 +28,17 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
     }
 
     public void setMovieData(ArrayList<Movie> items) {
-        listMovie.clear();
-        listMovie.addAll(items);
+        if (getItemCount() > 0) {
+            this.listMovie.clear();
+        }
+        this.listMovie.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public void removeItem(int position) {
+        this.listMovie.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, listMovie.size());
     }
 
     @NonNull

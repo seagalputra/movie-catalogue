@@ -1,6 +1,5 @@
 package com.seagalputra.moviecatalogue.viewmodel;
 
-import android.os.Build;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.seagalputra.moviecatalogue.BuildConfig;
-import com.seagalputra.moviecatalogue.model.Movie;
+import com.seagalputra.moviecatalogue.entity.Movie;
+import com.seagalputra.moviecatalogue.service.LoadDataCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +22,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
+
+    public static final int MOVIE_TYPE = 1;
 
     public void setMovie(String language) {
         String url = BuildConfig.MovieURL + language;
@@ -53,6 +54,7 @@ public class MovieViewModel extends ViewModel {
                 .withDate(movieItem.getString("release_date"))
                 .withDescription(movieItem.getString("overview"))
                 .withPhoto(posterPath)
+                .withType(MOVIE_TYPE)
                 .build();
     }
 

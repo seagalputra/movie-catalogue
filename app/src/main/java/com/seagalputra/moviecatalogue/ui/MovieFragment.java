@@ -2,12 +2,10 @@ package com.seagalputra.moviecatalogue.ui;
 
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,16 +13,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.seagalputra.moviecatalogue.BuildConfig;
 import com.seagalputra.moviecatalogue.DetailActivity;
 import com.seagalputra.moviecatalogue.R;
 import com.seagalputra.moviecatalogue.adapter.ListMovieAdapter;
-import com.seagalputra.moviecatalogue.model.Movie;
+import com.seagalputra.moviecatalogue.entity.Movie;
 import com.seagalputra.moviecatalogue.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
