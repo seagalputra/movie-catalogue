@@ -5,6 +5,11 @@
         android:id="@+id/make_favorite"
         android:title="@string/favorite"
         app:showAsAction="always"
+        android:icon="@drawable/ic_favorite_border_white_24dp" />
+    <item
+        android:id="@+id/make_unfavorite"
+        android:title="Unfavorite"
+        app:showAsAction="always"
         android:icon="@drawable/ic_favorite_white_24dp" />
 
 </menu>

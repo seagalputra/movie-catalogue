@@ -22,6 +22,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class TvShowViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Movie>> listTvShow = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Movie>> listFavoriteTvShow = new MutableLiveData<>();
+
     public static final int TVSHOW_TYPE = 2;
 
     public void setTvShow(String language) {
@@ -72,5 +74,13 @@ public class TvShowViewModel extends ViewModel {
 
     public LiveData<ArrayList<Movie>> getTvShows() {
         return listTvShow;
+    }
+
+    public LiveData<ArrayList<Movie>> getFavoriteTvShows() {
+        return listFavoriteTvShow;
+    }
+
+    public void setFavoriteTvShow(ArrayList<Movie> movies) {
+        this.listFavoriteTvShow.postValue(movies);
     }
 }

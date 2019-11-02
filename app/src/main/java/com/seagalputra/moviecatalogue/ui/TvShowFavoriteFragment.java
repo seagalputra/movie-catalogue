@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +29,8 @@ import com.seagalputra.moviecatalogue.repository.Repository;
 import com.seagalputra.moviecatalogue.repository.RepositoryImpl;
 import com.seagalputra.moviecatalogue.service.LoadDataCallback;
 import com.seagalputra.moviecatalogue.service.LoadTvShowAsync;
+import com.seagalputra.moviecatalogue.viewmodel.MovieViewModel;
+import com.seagalputra.moviecatalogue.viewmodel.TvShowViewModel;
 
 import java.util.ArrayList;
 
@@ -35,6 +39,8 @@ public class TvShowFavoriteFragment extends Fragment implements LoadDataCallback
     private ProgressBar progressBar;
     private Repository repository;
     private ListMovieAdapter movieAdapter;
+
+    private TvShowViewModel tvShowViewModel;
 
     public TvShowFavoriteFragment() {}
 
@@ -52,22 +58,32 @@ public class TvShowFavoriteFragment extends Fragment implements LoadDataCallback
         progressBar = view.findViewById(R.id.progressbar_favorite_tvshow);
         repository = RepositoryImpl.getInstance(view.getContext());
 
+        tvShowViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(TvShowViewModel.class);
+
         RecyclerView rvTvShow = view.findViewById(R.id.rv_favorite_tvshow);
         rvTvShow.setHasFixedSize(true);
         rvTvShow.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rvTvShow.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-        movieAdapter = new ListMovieAdapter();
+
+        movieAdapter = new ListMovieAdapter(getActivity());
         movieAdapter.notifyDataSetChanged();
         rvTvShow.setAdapter(movieAdapter);
 
-        movieAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {
+        new LoadTvShowAsync(repository, this).execute();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        tvShowViewModel.getFavoriteTvShows().observe(getViewLifecycleOwner(), new Observer<ArrayList<Movie>>() {
             @Override
-            public void onItemClicked(Movie movie) {
-                navigateToDetail(movie);
+            public void onChanged(ArrayList<Movie> movies) {
+                if (movies != null) {
+                    movieAdapter.setMovieData(movies);
+                }
             }
         });
-
-        new LoadTvShowAsync(repository, this).execute();
     }
 
     @Override
@@ -84,15 +100,9 @@ public class TvShowFavoriteFragment extends Fragment implements LoadDataCallback
     public void postExecute(ArrayList<Movie> movies) {
         progressBar.setVisibility(View.INVISIBLE);
         if (movies.size() > 0) {
-            movieAdapter.setMovieData(movies);
+            tvShowViewModel.setFavoriteTvShow(movies);
         } else {
-            movieAdapter.setMovieData(new ArrayList<Movie>());
+            tvShowViewModel.setFavoriteTvShow(new ArrayList<Movie>());
         }
-    }
-
-    private void navigateToDetail(Movie movie) {
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
-        startActivity(intent);
     }
 }

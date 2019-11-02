@@ -60,6 +60,20 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Cursor queryById(String table, String id) {
+        return database.query(
+                table,
+                null,
+                DatabaseContract.DatabaseColumns.ID + " = ?",
+                new String[]{id},
+                null,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
     public long insert(String table, ContentValues values) {
         return database.insert(table, null, values);
     }
@@ -68,4 +82,5 @@ public class RepositoryImpl implements Repository {
     public int deleteById(String table, String id) {
         return database.delete(table, DatabaseContract.DatabaseColumns.ID + " = ?", new String[]{id});
     }
+
 }

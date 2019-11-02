@@ -1,5 +1,7 @@
 package com.seagalputra.moviecatalogue.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.seagalputra.moviecatalogue.DetailActivity;
 import com.seagalputra.moviecatalogue.R;
 import com.seagalputra.moviecatalogue.entity.Movie;
+import com.seagalputra.moviecatalogue.ui.MovieFavoriteFragment;
 
 import java.util.ArrayList;
 
 public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.ListViewHolder> {
     private ArrayList<Movie> listMovie;
-    private OnItemClickCallback onItemClickCallback;
+    private Activity activity;
 
-    public ListMovieAdapter() {
-        listMovie = new ArrayList<>();
-    }
-
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
+    public ListMovieAdapter(Activity activity) {
+        this.listMovie = new ArrayList<>();
+        this.activity = activity;
     }
 
     public void setMovieData(ArrayList<Movie> items) {
@@ -43,7 +44,7 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ListViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ListViewHolder holder, int position) {
         Movie movie = listMovie.get(position);
 
         Glide.with(holder.itemView.getContext())
@@ -54,12 +55,16 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         holder.tvDescription.setText(movie.getDescription());
         holder.tvDate.setText(movie.getDate());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new CustomOnClickListener(position, new CustomOnClickListener.OnItemClickCallback() {
             @Override
-            public void onClick(View v) {
-                onItemClickCallback.onItemClicked(listMovie.get(holder.getAdapterPosition()));
+            public void onItemClicked(View view, int position) {
+                Intent intent = new Intent(activity, DetailActivity.class);
+                intent.putExtra(DetailActivity.EXTRA_POSITION, position);
+                intent.putExtra(DetailActivity.EXTRA_MOVIE, listMovie.get(position));
+                activity.startActivity(intent);
             }
-        });
+        }));
+
     }
 
     @Override
@@ -80,9 +85,5 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
             tvDescription = itemView.findViewById(R.id.tv_description);
             imgPhoto = itemView.findViewById(R.id.img_photo);
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(Movie movie);
     }
 }

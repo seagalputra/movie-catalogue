@@ -64,7 +64,7 @@ public class TvShowFragment extends Fragment {
         rvTvShows.setHasFixedSize(true);
         rvTvShows.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rvTvShows.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-        listTvShowAdapter = new ListMovieAdapter();
+        listTvShowAdapter = new ListMovieAdapter(getActivity());
         listTvShowAdapter.notifyDataSetChanged();
         rvTvShows.setAdapter(listTvShowAdapter);
     }
@@ -79,22 +79,9 @@ public class TvShowFragment extends Fragment {
                 if (movies != null) {
                     listTvShowAdapter.setMovieData(movies);
                     showLoading(false);
-
-                    listTvShowAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {
-                        @Override
-                        public void onItemClicked(Movie movie) {
-                            navigateToDetail(movie);
-                        }
-                    });
                 }
             }
         });
-    }
-
-    private void navigateToDetail(Movie movie) {
-        Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-        detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
-        startActivity(detailIntent);
     }
 
     private void showLoading(Boolean state) {

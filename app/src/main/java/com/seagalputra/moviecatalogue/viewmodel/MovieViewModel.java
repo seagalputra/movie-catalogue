@@ -17,12 +17,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
 public class MovieViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Movie>> listFavoriteMovie = new MutableLiveData<>();
 
     public static final int MOVIE_TYPE = 1;
 
@@ -74,5 +76,13 @@ public class MovieViewModel extends ViewModel {
 
     public LiveData<ArrayList<Movie>> getMovies() {
         return listMovies;
+    }
+
+    public LiveData<ArrayList<Movie>> getListFavoriteMovie() {
+        return listFavoriteMovie;
+    }
+
+    public void setListFavoriteMovie(ArrayList<Movie> listFavoriteMovie) {
+        this.listFavoriteMovie.postValue(listFavoriteMovie);
     }
 }

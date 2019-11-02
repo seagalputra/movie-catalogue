@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,17 +27,19 @@ import com.seagalputra.moviecatalogue.repository.Repository;
 import com.seagalputra.moviecatalogue.repository.RepositoryImpl;
 import com.seagalputra.moviecatalogue.service.LoadDataCallback;
 import com.seagalputra.moviecatalogue.service.LoadMovieAsync;
+import com.seagalputra.moviecatalogue.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import static com.seagalputra.moviecatalogue.DetailActivity.EXTRA_POSITION;
+
 public class MovieFavoriteFragment extends Fragment implements LoadDataCallback {
 
     private ProgressBar progressBar;
     private Repository repository;
     private ListMovieAdapter listMovieAdapter;
+
+    private MovieViewModel movieViewModel;
 
     public MovieFavoriteFragment() {}
 
@@ -53,27 +57,33 @@ public class MovieFavoriteFragment extends Fragment implements LoadDataCallback 
         progressBar = view.findViewById(R.id.progressbar_favorite_movie);
         repository = RepositoryImpl.getInstance(view.getContext());
 
+        movieViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MovieViewModel.class);
+
         RecyclerView rvMovies = view.findViewById(R.id.rv_favorite_movie);
         rvMovies.setHasFixedSize(true);
         rvMovies.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rvMovies.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-        listMovieAdapter = new ListMovieAdapter();
+
+        listMovieAdapter = new ListMovieAdapter(getActivity());
         listMovieAdapter.notifyDataSetChanged();
         rvMovies.setAdapter(listMovieAdapter);
 
-        listMovieAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(Movie movie) {
-                navigateToDetail(movie);
-            }
-        });
-
         new LoadMovieAsync(repository, this).execute();
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        movieViewModel.getListFavoriteMovie().observe(getViewLifecycleOwner(), new Observer<ArrayList<Movie>>() {
+            @Override
+            public void onChanged(ArrayList<Movie> movies) {
+                if (movies != null) {
+                    listMovieAdapter.setMovieData(movies);
+                }
+            }
+        });
     }
 
     @Override
@@ -81,25 +91,28 @@ public class MovieFavoriteFragment extends Fragment implements LoadDataCallback 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                progressBar.setVisibility(View.VISIBLE);
+                showLoading(true);
             }
         });
     }
 
     @Override
     public void postExecute(ArrayList<Movie> movies) {
-        progressBar.setVisibility(View.INVISIBLE);
+        showLoading(false);
+
         if (movies.size() > 0) {
-            listMovieAdapter.setMovieData(movies);
+            movieViewModel.setListFavoriteMovie(movies);
         } else {
-            listMovieAdapter.setMovieData(new ArrayList<Movie>());
+            movieViewModel.setListFavoriteMovie(new ArrayList<Movie>());
             Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void navigateToDetail(Movie movie) {
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
-        startActivity(intent);
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

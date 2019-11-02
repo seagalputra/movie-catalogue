@@ -1,6 +1,7 @@
 package com.seagalputra.moviecatalogue.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,9 +23,6 @@ import com.seagalputra.moviecatalogue.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FavoriteFragment extends Fragment {
 
     public FavoriteFragment() {}

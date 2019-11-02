@@ -63,7 +63,7 @@ public class MovieFragment extends Fragment {
         rvMovies.setHasFixedSize(true);
         rvMovies.setLayoutManager(new LinearLayoutManager(view.getContext()));
         rvMovies.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
-        listMovieAdapter = new ListMovieAdapter();
+        listMovieAdapter = new ListMovieAdapter(getActivity());
         listMovieAdapter.notifyDataSetChanged();
         rvMovies.setAdapter(listMovieAdapter);
     }
@@ -78,22 +78,9 @@ public class MovieFragment extends Fragment {
                 if (movies != null) {
                     listMovieAdapter.setMovieData(movies);
                     showLoading(false);
-
-                    listMovieAdapter.setOnItemClickCallback(new ListMovieAdapter.OnItemClickCallback() {
-                        @Override
-                        public void onItemClicked(Movie movie) {
-                            navigateToDetail(movie);
-                        }
-                    });
                 }
             }
         });
-    }
-
-    private void navigateToDetail(Movie movie) {
-        Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-        detailIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
-        startActivity(detailIntent);
     }
 
     private void showLoading(Boolean state) {

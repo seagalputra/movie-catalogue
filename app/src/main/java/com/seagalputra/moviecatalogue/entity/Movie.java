@@ -50,6 +50,10 @@ public final class Movie implements Parcelable {
         return isFavorite;
     }
 
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
     @Override
     public int describeContents() {
         return 0;
