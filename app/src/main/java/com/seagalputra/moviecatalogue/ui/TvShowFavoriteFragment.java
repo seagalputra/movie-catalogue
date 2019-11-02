@@ -30,9 +30,6 @@ import com.seagalputra.moviecatalogue.service.LoadTvShowAsync;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TvShowFavoriteFragment extends Fragment implements LoadDataCallback {
 
     private ProgressBar progressBar;

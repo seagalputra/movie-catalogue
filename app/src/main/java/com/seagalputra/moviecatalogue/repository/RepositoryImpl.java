@@ -46,15 +46,16 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Cursor queryAll(String table) {
+    public Cursor queryByType(String table, String type) {
         return database.query(
                 table,
                 null,
+                DatabaseContract.DatabaseColumns.TYPE + " = ?",
+                new String[]{type},
                 null,
                 null,
                 null,
-                null,
-                DatabaseContract.DatabaseColumns.ID + " ASC"
+                null
         );
     }
 

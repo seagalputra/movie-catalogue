@@ -35,12 +35,6 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         notifyDataSetChanged();
     }
 
-    public void removeItem(int position) {
-        this.listMovie.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, listMovie.size());
-    }
-
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

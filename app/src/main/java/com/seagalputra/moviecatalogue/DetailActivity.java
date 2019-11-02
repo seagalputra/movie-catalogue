@@ -24,7 +24,6 @@ import static com.seagalputra.moviecatalogue.viewmodel.MovieViewModel.MOVIE_TYPE
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String MOVIE_TABLE = DatabaseContract.MOVIE_TABLE_NAME;
-    public static final String TVSHOW_TABLE = DatabaseContract.TVSHOW_TABLE_NAME;
 
     private TextView tvTitle;
     private TextView tvDate;
@@ -61,11 +60,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.make_favorite) {
-            if (movie.getType() == MOVIE_TYPE) {
-                setFavoriteMovie(movie);
-            } else {
-                setFavoriteTvShow(movie);
-            }
+            setFavoriteMovie(movie);
         }
         
         return super.onOptionsItemSelected(item);
@@ -95,29 +90,13 @@ public class DetailActivity extends AppCompatActivity {
         values.put(DatabaseContract.DatabaseColumns.TITLE, movie.getTitle());
         values.put(DatabaseContract.DatabaseColumns.DATE, movie.getDate());
         values.put(DatabaseContract.DatabaseColumns.DESCRIPTION, movie.getDescription());
+        values.put(DatabaseContract.DatabaseColumns.FAVORITE, movie.getIsFavorite());
 
         long result = repository.insert(MOVIE_TABLE, values);
         if (result > 0) {
             Toast.makeText(this, "Movie successfully added!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Movie unseccessfully added!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void setFavoriteTvShow(Movie movie) {
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.DatabaseColumns.ID, movie.getId());
-        values.put(DatabaseContract.DatabaseColumns.TYPE, movie.getType());
-        values.put(DatabaseContract.DatabaseColumns.PHOTO, movie.getPhoto());
-        values.put(DatabaseContract.DatabaseColumns.TITLE, movie.getTitle());
-        values.put(DatabaseContract.DatabaseColumns.DATE, movie.getDate());
-        values.put(DatabaseContract.DatabaseColumns.DESCRIPTION, movie.getDescription());
-        
-        long result = repository.insert(TVSHOW_TABLE, values);
-        if (result > 0) {
-            Toast.makeText(this, "Tv Show successfully added!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Tv Show unsuccessfully added!", Toast.LENGTH_SHORT).show();
         }
     }
 

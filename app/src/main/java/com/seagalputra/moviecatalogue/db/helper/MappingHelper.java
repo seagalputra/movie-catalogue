@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import com.seagalputra.moviecatalogue.db.contract.DatabaseContract;
 import com.seagalputra.moviecatalogue.entity.Movie;
+import com.seagalputra.moviecatalogue.entity.MovieBuilder;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,13 @@ public class MappingHelper {
             String title = movieCursor.getString(movieCursor.getColumnIndexOrThrow(DatabaseContract.DatabaseColumns.TITLE));
             String date = movieCursor.getString(movieCursor.getColumnIndexOrThrow(DatabaseContract.DatabaseColumns.DATE));
             String description = movieCursor.getString(movieCursor.getColumnIndexOrThrow(DatabaseContract.DatabaseColumns.DESCRIPTION));
-            Movie movie = new Movie.MovieBuilder(id, title)
+            int favorite = movieCursor.getInt(movieCursor.getColumnIndexOrThrow(DatabaseContract.DatabaseColumns.FAVORITE));
+            Movie movie = new MovieBuilder(id, title)
                     .withPhoto(photo)
                     .withDate(date)
                     .withDescription(description)
                     .withType(type)
+                    .withFavorite(favorite)
                     .build();
             moviesList.add(movie);
         }

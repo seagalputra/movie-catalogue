@@ -29,7 +29,7 @@ public class LoadTvShowAsync extends AsyncTask<Void, Void, ArrayList<Movie>> {
 
     @Override
     protected ArrayList<Movie> doInBackground(Void... voids) {
-        Cursor tvShowCursor = weakRepositoryHelper.get().queryAll(DatabaseContract.TVSHOW_TABLE_NAME);
+        Cursor tvShowCursor = weakRepositoryHelper.get().queryByType(DatabaseContract.MOVIE_TABLE_NAME, "2");
         return MappingHelper.mapCursorToArrayList(tvShowCursor);
     }
 

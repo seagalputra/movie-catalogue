@@ -10,6 +10,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.seagalputra.moviecatalogue.BuildConfig;
 import com.seagalputra.moviecatalogue.entity.Movie;
+import com.seagalputra.moviecatalogue.entity.MovieBuilder;
 import com.seagalputra.moviecatalogue.service.LoadDataCallback;
 
 import org.json.JSONArray;
@@ -50,11 +51,12 @@ public class MovieViewModel extends ViewModel {
     private Movie getMovie(JSONObject movieItem, String url) throws JSONException {
         String posterPath = url + movieItem.getString("poster_path");
 
-        return new Movie.MovieBuilder(movieItem.getInt("id"), movieItem.getString("original_title"))
+        return new MovieBuilder(movieItem.getInt("id"), movieItem.getString("original_title"))
                 .withDate(movieItem.getString("release_date"))
                 .withDescription(movieItem.getString("overview"))
                 .withPhoto(posterPath)
                 .withType(MOVIE_TYPE)
+                .withFavorite(0)
                 .build();
     }
 

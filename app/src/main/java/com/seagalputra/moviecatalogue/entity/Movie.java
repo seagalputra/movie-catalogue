@@ -4,36 +4,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public final class Movie implements Parcelable {
-    private final int id;
-    private final int type;
-    private final String photo;
-    private final String title;
-    private final String date;
-    private final String description;
+    private int id;
+    private int type;
+    private String photo;
+    private String title;
+    private String date;
+    private String description;
+    private int isFavorite;
 
-    private Movie(MovieBuilder movieBuilder) {
-        this.id = movieBuilder.id;
-        this.type = movieBuilder.type;
-        this.photo = movieBuilder.photo;
-        this.title = movieBuilder.title;
-        this.date = movieBuilder.date;
-        this.description = movieBuilder.description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDate() {
-        return date;
+    public Movie(int id, int type, String photo, String title, String date, String description, int isFavorite) {
+        this.id = id;
+        this.type = type;
+        this.photo = photo;
+        this.title = title;
+        this.date = date;
+        this.description = description;
+        this.isFavorite = isFavorite;
     }
 
     public int getId() {
@@ -44,46 +30,24 @@ public final class Movie implements Parcelable {
         return type;
     }
 
-    public static class MovieBuilder {
-        private final int id;
-        private int type;
-        private String photo;
-        private final String title;
-        private String date;
-        private String description;
+    public String getPhoto() {
+        return photo;
+    }
 
-        public MovieBuilder(int id, String title) {
-            if (title == null) {
-                throw new IllegalArgumentException("title can not be null");
-            }
+    public String getTitle() {
+        return title;
+    }
 
-            this.id = id;
-            this.title = title;
-        }
+    public String getDate() {
+        return date;
+    }
 
-        public MovieBuilder withPhoto(String photo) {
-            this.photo = photo;
-            return this;
-        }
+    public String getDescription() {
+        return description;
+    }
 
-        public MovieBuilder withDate(String date) {
-            this.date = date;
-            return this;
-        }
-
-        public MovieBuilder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public MovieBuilder withType(int type) {
-            this.type = type;
-            return this;
-        }
-
-        public Movie build() {
-            return new Movie(this);
-        }
+    public int getIsFavorite() {
+        return isFavorite;
     }
 
     @Override
@@ -99,6 +63,7 @@ public final class Movie implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.date);
         dest.writeString(this.description);
+        dest.writeInt(this.isFavorite);
     }
 
     protected Movie(Parcel in) {
@@ -108,6 +73,7 @@ public final class Movie implements Parcelable {
         this.title = in.readString();
         this.date = in.readString();
         this.description = in.readString();
+        this.isFavorite = in.readInt();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

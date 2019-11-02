@@ -10,6 +10,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.seagalputra.moviecatalogue.BuildConfig;
 import com.seagalputra.moviecatalogue.entity.Movie;
+import com.seagalputra.moviecatalogue.entity.MovieBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,11 +61,12 @@ public class TvShowViewModel extends ViewModel {
 
     private Movie getTvShow(JSONObject item, String posterUrl) throws JSONException {
         String posterPath = posterUrl + item.getString("poster_path");
-        return new Movie.MovieBuilder(item.getInt("id"), item.getString("original_name"))
+        return new MovieBuilder(item.getInt("id"), item.getString("original_name"))
                 .withDate(item.getString("first_air_date"))
                 .withDescription(item.getString("overview"))
                 .withPhoto(posterPath)
                 .withType(TVSHOW_TYPE)
+                .withFavorite(0)
                 .build();
     }
 
